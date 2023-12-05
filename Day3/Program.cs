@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-var lines = File.ReadAllLines("input.txt");
+﻿var lines = File.ReadAllLines("input.txt");
 
 int sum = 0;
 
@@ -34,6 +32,7 @@ for (int y = 0; y < lines.Length; y++)
         {
             sum += number;
 
+            //build gears
             if (lines[hit.y][hit.x] == '*')
             {
                 (int x, int y) location = (hit.x, hit.y);
