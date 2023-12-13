@@ -1,6 +1,4 @@
-﻿
-
-using Day13;
+﻿using Day13;
 
 var lines = File.ReadAllLines("input.txt");
 
@@ -21,18 +19,26 @@ foreach (var line in lines)
 
 CreateMap(linesForNextMap);
 
-int sum = 0;
+int sumClear = 0;
+int sumSmudge = 0;
 
 foreach (var map in maps)
 {
-    var value = map.MirrorIndex;
-    if (map.Horizontal)
-        value *= 100;
+    var valueClear = map.MirrorIndexClear;
+    if (map.HorizontalClear)
+        valueClear *= 100;
     
-    sum += value;
+    sumClear += valueClear;
+    
+    var valueSmudge = map.MirrorIndexSmudge;
+    if (map.HorizontalSmudge)
+        valueSmudge *= 100;
+    
+    sumSmudge += valueSmudge;
 }
 
-Console.WriteLine("Part 1: " + sum);
+Console.WriteLine("Part 1: " + sumClear);
+Console.WriteLine("Part 2: " + sumSmudge);
 
 
 void CreateMap(List<string> list)
@@ -40,8 +46,6 @@ void CreateMap(List<string> list)
     var map = new Map(list);
     maps.Add(map);
     list.Clear();
-
-    Console.WriteLine("Horizontal? " + map.Horizontal + "... Mirror index: " + map.MirrorIndex);
 }
 
 
