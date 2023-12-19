@@ -44,10 +44,13 @@ long sum = 0;
 foreach (var machinePart in AcceptRule.AcceptedParts)
 {
     sum += machinePart.Values.Values.Sum();
-    Console.WriteLine(machinePart.Values['x'] + " " + machinePart.Values['m'] + " " + machinePart.Values['a'] + " " +
-                      machinePart.Values['s']);
 }
 
 Console.WriteLine("Part 1: " + sum);
 
+MachinePartGroup startGroup = new MachinePartGroup();
+initialWorkflow.Execute(startGroup);
 
+sum = AcceptRule.AcceptedGroups.Sum(group => group.Count());
+
+Console.WriteLine("Part 2: " + sum);

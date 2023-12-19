@@ -3,7 +3,6 @@ namespace Day19;
 public class Workflow
 {
     public static Dictionary<string, Workflow> Workflows = new Dictionary<string, Workflow>();
-
     public List<Rule> Rules = new List<Rule>();
     
     private string[] _rulesInput;
@@ -24,6 +23,20 @@ public class Workflow
         }
 
         throw new Exception();
+    }
+    
+    public void Execute(MachinePartGroup machinePartGroup)
+    {
+        foreach (var rule in Rules)
+        {
+            var newGroups = rule.RuleApplies(machinePartGroup);
+            
+            if (newGroups.apply != null)
+                rule.Workflow.Execute(newGroups.apply);
+            
+            if (newGroups.notApply != null)
+                machinePartGroup = newGroups.notApply;
+        }
     }
     
     public void CreateRules()
@@ -54,8 +67,8 @@ public class Workflow
                 
                 Rules.Add(new MoreThanRule()
                 {
-                    machinePartParameter = parameterName,
-                    compare = value,
+                    MachinePartParameter = parameterName,
+                    Compare = value,
                     Workflow = workflow
                 });
                 continue;
@@ -73,8 +86,8 @@ public class Workflow
                 
                 Rules.Add(new LessThanRule()
                 {
-                    machinePartParameter = parameterName,
-                    compare = value,
+                    MachinePartParameter = parameterName,
+                    Compare = value,
                     Workflow = workflow
                 });
                 continue;
